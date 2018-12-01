@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.4)
+cmake_minimum_required(VERSION 3.0)
 project(TUv++)
 
 enable_language(CXX)
@@ -13,6 +13,10 @@ add_definitions(-DNDEBUG)
 set(CMAKE_MODULE_PATH
     ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake_modules")
 include(FindX11_Xaw3d)
+
+if(APPLE)
+  set(MACOSX_RPATH TRUE)
+endif()
 
 find_package(X11 REQUIRED)
 find_package(X11_Xaw3d REQUIRED)
