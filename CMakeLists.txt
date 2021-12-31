@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(TUv++)
+project(TUv)
 
 enable_language(CXX)
 set(CMAKE_CXX_STANDARD		14)
@@ -31,10 +31,10 @@ include_directories(
 link_directories(${CMAKE_INSTALL_PREFIX}/lib)
 
 file(GLOB sources *.cc *.c)
-add_library(TUv++ SHARED ${sources})
+add_library(${PROJECT_NAME} SHARED ${sources})
 target_link_libraries(
     ${PROJECT_NAME}
-    TUTools++
+    TUTools
     ${X11_Xaw3d_LIB}
     ${X11_Xt_LIB}
     ${X11_Xmu_LIB}
