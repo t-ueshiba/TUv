@@ -11,21 +11,6 @@ namespace TU
 namespace v
 {
 /************************************************************************
-*  function objects							*
-************************************************************************/
-struct IdEqualTo : public std::binary_function<Cmd, CmdId, bool>
-{
-    bool	operator ()(const Cmd& vcmd, CmdId id) const
-			{return vcmd.id() == id;}
-};
-
-struct ValueIsNotZero : public std::unary_function<Cmd, bool>
-{
-    bool	operator ()(const Cmd& vcmd) const
-			{return vcmd.getValue() != 0;}
-};
-
-/************************************************************************
 *  class CmdParent							*
 ************************************************************************/
 /*
@@ -83,9 +68,11 @@ const Cmd*
 CmdParent::findChild(CmdId id) const
 {
     using namespace std;
+    using namespace std::placeholders;
     
     List<Cmd>::ConstIterator where = find_if(_cmdList.begin(), _cmdList.end(),
-					     bind2nd(IdEqualTo(), id));
+					     [id](const auto& vcmd)
+					     { return vcmd.id() == id; });
     return (where != _cmdList.end() ? where.operator ->() : 0);
 }
 
@@ -95,7 +82,8 @@ CmdParent::findChild(CmdId id)
     using namespace std;
     
     List<Cmd>::Iterator where = find_if(_cmdList.begin(), _cmdList.end(),
-					bind2nd(IdEqualTo(), id));
+					[id](const auto& vcmd)
+					{ return vcmd.id() == id; });
     return (where != _cmdList.end() ? where.operator ->() : 0);
 }
 
@@ -105,7 +93,8 @@ CmdParent::findChildWithNonZeroValue() const
     using namespace std;
     
     List<Cmd>::ConstIterator where = find_if(_cmdList.begin(), _cmdList.end(),
-					     ValueIsNotZero());
+					     [](const auto& vcmd)
+					     { return vcmd.getValue() != 0; });
     return (where != _cmdList.end() ? where.operator ->() : 0);
 }
 
