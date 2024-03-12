@@ -194,6 +194,9 @@ Colormap::getUnderlayPixel<short>(short val, size_t, size_t) const
 template <> inline u_long
 Colormap::getUnderlayPixel<float>(float val, size_t, size_t) const
 {
+    if (std::isnan(val))
+	val = 0.0f;
+    
     float	fidx = _gain * val;
     int		idx = (fidx > float(INT_MAX) ? INT_MAX :
 		       fidx < float(INT_MIN) ? INT_MIN + 1 : int(fidx + 0.5));
