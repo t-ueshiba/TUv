@@ -14,7 +14,7 @@ MOCHDRS		=
 
 INCDIRS		= -I. -I$(PREFIX)/include
 CPPFLAGS	= -DNDEBUG
-CFLAGS		= -O3 -Wall
+CFLAGS		= -g -Wall
 NVCCFLAGS	= -O
 ifeq ($(shell arch), armv7l)
   CPPFLAGS     += -DNEON
@@ -26,7 +26,7 @@ else
 endif
 CCFLAGS		= $(CFLAGS)
 
-LIBS		= -lTUTools++ -lXaw3d -lXt -lXext -lXmu -lX11
+LIBS		= -lTUTools -lXaw3d -lXt -lXext -lXmu -lX11
 LINKER		= $(CXX)
 
 BINDIR		= $(PREFIX)/bin
